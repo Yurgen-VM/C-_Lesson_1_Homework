@@ -12,7 +12,7 @@
             else
             {
                 string str = String.Concat(args); // Реализация для случая, когда выражение записано слитно, к примеру: a+b, a +b, a+ b
-                Console.WriteLine(str);
+                //Console.WriteLine(str);
                 if (str.Length > 2)
                 {
                     for (int i = 0; i < str.Length; i++)
@@ -55,7 +55,6 @@
                                         }
                                         Console.WriteLine("Делениие на 0 запрещено! Измените условия выражения.");
                                         return;
-                                        
                                 }
                             }
                         }
