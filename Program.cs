@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization.Json;
-
-namespace Task_1_HW
+﻿namespace Task_1_HW
 {
     internal class Program
     {
@@ -13,103 +11,62 @@ namespace Task_1_HW
             }
             else
             {
-                if (args.Length <= 2) // Реализация для случая, когда выражение записано слитно, к примеру: a+b, a-b, a*b, a/b
+                string str = String.Concat(args); // Реализация для случая, когда выражение записано слитно, к примеру: a+b, a +b, a+ b
+                Console.WriteLine(str);
+                if (str.Length > 2)
                 {
-                    //string str = args[0];
-                    string str = String.Concat(args);
-                    Console.WriteLine(str);
-                    if (str.Length >= 3)
+                    for (int i = 0; i < str.Length; i++)
                     {
-                        for (int i = 0; i < str.Length; i++ )
+                        char[] sep = new char[] { '+', '-', '*', '/', };
+                        string[] strArray = str.Split(sep);
+                        double result;
+                        if (strArray.Length > 2)
                         {
-                            char[] sep = new char[] {'+', '-', '*', '/',' ' };
-                            string[] strArray = str.Split(sep);
-                            double.TryParse(strArray[0], out double oprnd_1);
-                            double.TryParse(strArray[1], out double oprnd_2);
-                            double result;
-                            switch (str[i])
-                            {
-                                case '+':
-                                    if (strArray.Length > 2)
-                                    {
-                                        Console.WriteLine("Превышено количестово операндов в выражении");
-                                        return;
-                                    }
-                                    result = oprnd_1 + oprnd_2;
-                                    Console.WriteLine($"Значение выражения {oprnd_1} + {oprnd_2} = {result}");
-                                    return;
-                                
-                                case '-':
-                                    if (strArray.Length > 2)
-                                    {
-                                        Console.WriteLine("Превышено количестово операндов в выражении");
-                                        return;
-                                    }
-                                    result = oprnd_1 - oprnd_2;
-                                    Console.WriteLine($"Значение выражения {oprnd_1} - {oprnd_2} = {result}");
-                                    return;
-                                
-                                case '*':
-                                    if (strArray.Length > 2)
-                                    {
-                                        Console.WriteLine("Превышено количестово операндов в выражении");
-                                        return;
-                                    }
-                                    result = oprnd_1 * oprnd_2;
-                                    Console.WriteLine($"Значение выражения {oprnd_1} * {oprnd_2} = {result}");
-                                    return;
-
-
-                            }
-                                                    
-
-                            
-                         
+                            Console.WriteLine("Превышено количестово операндов в выражении");
+                            return;
                         }
+                        if (double.TryParse(strArray[0], out double oprnd_1))
+                        {
+                            if (double.TryParse(strArray[1], out double oprnd_2))
+                            {
+                                switch (str[i])
+                                {
+                                    case '+':
+                                        result = oprnd_1 + oprnd_2;
+                                        Console.WriteLine($"Значение выражения {oprnd_1} + {oprnd_2} = {result}");
+                                        return;
 
+                                    case '-':
+                                        result = oprnd_1 - oprnd_2;
+                                        Console.WriteLine($"Значение выражения {oprnd_1} - {oprnd_2} = {result}");
+                                        return;
 
+                                    case '*':
+                                        result = oprnd_1 * oprnd_2;
+                                        Console.WriteLine($"Значение выражения {oprnd_1} * {oprnd_2} = {result}");
+                                        return;
+
+                                    case '/':
+                                        if (oprnd_2 != 0)
+                                        {
+                                            result = oprnd_1 / oprnd_2;
+                                            Console.WriteLine($"Значение выражения {oprnd_1} / {oprnd_2} = {result}");
+                                            return;
+                                        }
+                                        Console.WriteLine("Делениие на 0 запрещено! Измените условия выражения.");
+                                        return;
+                                        
+                                }
+                            }
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("Недостаточное количество аргументов");
-                        return;
-                    }
+                    Console.WriteLine("Нельзя использовать буквы в качестве операнда");
                 }
                 else
                 {
-                    double.TryParse(args[0], out double oprnd_1);
-                    double.TryParse(args[2], out double oprnd_2);
-                    char.TryParse(args[1], out char oprt);
-                    double result;
-                    switch (oprt)
-                    {
-                        case '+':
-                            result = oprnd_1 + oprnd_2;
-                            Console.WriteLine(result);
-                            break;
-
-                        case '-':
-                            result = oprnd_1 - oprnd_2;
-                            Console.WriteLine(result);
-                            break;
-
-                        case '*':
-                            result = oprnd_1 * oprnd_2;
-                            Console.WriteLine(result);
-                            break;
-
-                        case '/':
-                            result = oprnd_1 / oprnd_2;
-                            Console.WriteLine(result);
-                            break;
-                    }
-
+                    Console.WriteLine("Недостаточное количество аргументов");
+                    return;
                 }
-
-
-
-
-
             }
         }
     }
